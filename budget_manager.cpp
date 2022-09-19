@@ -19,10 +19,6 @@ double BudgetManager::ComputeIncome(ComputingIncome query) {
         sum += days_[i].income;
     }
     return sum;
-//    return std::transform_reduce(days_.begin() + time_until_beg, days_.begin() + time_until_end + 1,
-//                                 0.0, std::plus<>{}, [](const Day &d) {
-//                                                            return d.income;
-//                                                        });
 }
 
 void BudgetManager::Earn(EarningQuery query) {
@@ -35,10 +31,6 @@ void BudgetManager::Earn(EarningQuery query) {
     for (int i = time_until_beg; i <= time_until_end; ++i) {
         days_[i].income += inc_per_day;
     }
-//    std::for_each(days_.begin() + time_until_beg, days_.begin() + time_until_end + 1,
-//                  [inc_per_day](Day &d) {
-//                                    d.income += inc_per_day;
-//                                });
 }
 
 void BudgetManager::PayTax(PayingTaxQuery query) {
@@ -47,8 +39,4 @@ void BudgetManager::PayTax(PayingTaxQuery query) {
     for (int i = time_until_beg; i <= time_until_end; ++i) {
         days_[i].income *= 0.87;
     }
-//        std::for_each(days_.begin() + time_until_beg, days_.begin() + time_until_end + 1,
-//                      [](Day &d) {
-//                            d.income *= 0.87;
-//                        });
 }

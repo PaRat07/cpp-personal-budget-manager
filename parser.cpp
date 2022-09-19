@@ -18,11 +18,20 @@ void ParseAndProcessQuery(BudgetManager &manager, std::string_view line) {
         EarningQuery q{beg, end, income};
         manager.Earn(q);
     }
+    else if (query_type == "PayTax") {
+        Date beg, end;
+        beg = Date::FromString(line.substr(0, line.find_first_of(' ')));
+        end = Date::FromString(line.substr(line.find_first_of(' ') + 1, line.find_last_of(' ') - line.find_first_of(' ') - 1));
+        int percent = std::stoi(std::string(line.substr(line.find_last_of(' ') + 1, line.size() - line.find_last_of(' ') - 1)));
+        PayingTaxQuery q{beg, end, percent};
+        manager.PayTax(q);
+    }
     else {
         Date beg, end;
         beg = Date::FromString(line.substr(0, line.find_first_of(' ')));
         end = Date::FromString(line.substr(line.find_first_of(' ') + 1, line.find_last_of(' ') - line.find_first_of(' ') - 1));
-        PayingTaxQuery q{beg, end};
-        manager.PayTax(q);
+        double expense = std::stod(std::string(line.substr(line.find_last_of(' ') + 1, line.size() - line.find_last_of(' ') - 1)));
+        SpendingQuery q{beg, end, expense};
+        manager.Spend(q);
     }
 }
